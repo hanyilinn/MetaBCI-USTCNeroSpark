@@ -16,7 +16,22 @@ from copy import copy
 import random
 from scipy import signal
 from PIL import Image
-
+import cv2
+import pygame
+import tkinter as tk
+from tkinter import ttk
+from pygame.locals import *
+from datetime import datetime
+import sys
+sys.path.append('D:\MetaBCI-master')
+from psychopy import monitors
+from psychopy.tools.monitorunittools import deg2pix
+from metabci.brainstim.framework import Experiment
+from moviepy.editor import VideoFileClip
+import vlc
+from datetime import datetime
+import time
+from scipy.signal import butter, lfilter
 
 # prefunctions
 
@@ -504,17 +519,6 @@ class SSVEP(VisualStim):
 
     The subclass SSVEP inherits from the parent class VisualStim, and duplicate properties are not listed.
 
-    author: Qiaoyi Wu
-
-    Created on: 2022-06-20
-
-    update log:
-        2022-06-26 by Jianhang Wu
-
-        2022-08-10 by Wei Zhao
-
-        2023-12-09 by Simiao Li <lsm_sim@tju.edu.cn> Add code annotation
-
     Parameters
     ----------
         win:
@@ -705,6 +709,145 @@ class SSVEP(VisualStim):
                     texRes=48,
                 )
             )
+
+
+#  Short video playback paradigm in mp4 format
+
+# 打分显示类
+class ScoresDisplay:
+    def __init__(self, win):
+        self.font = pygame.font.Font(None, 36)
+        self.prediction = 0
+        self.text_color = (255, 255, 255)  # 白色文字
+
+    def update(self, prediction):
+        self.prediction = prediction
+
+    def draw(self, win):
+        win.fill((0, 0, 0))  # 用黑色填充背景
+        text = f"Liking: {self.prediction}%"
+        text_surface = self.font.render(text, True, self.text_color)
+        win.blit(text_surface, (1700, 500))  # 假设分辨率为1920x1080，将文本放在右侧中央
+
+
+class mp4play(VisualStim):
+    def __init__(self, win, colorSpace="rgb", allowGUI=True):
+        super().__init__(win=win, colorSpace=colorSpace, allowGUI=allowGUI)
+        self.folder_path = 'D:\\MetaBCI-master\\tiktok'
+        self.videos = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if f.endswith('.mp4')]
+        self.played_videos = set()
+        if not self.videos:
+            print("Video file not found")
+
+    def mp4gain(self):
+        if not self.videos:
+            print("No video file")
+            return None
+        while self.videos:
+            video_path = random.choice(self.videos)
+            if video_path not in self.played_videos:
+                self.played_videos.add(video_path)
+                return video_path
+            else:
+                continue
+        print("All videos have been played")
+        return None
+
+    def feedback(self, video_path):
+        instance = vlc.Instance()
+        player = instance.media_player_new()
+        media = instance.media_new(video_path)
+        player.set_media(media)
+
+        player.play()
+
+        while player.get_state() == vlc.State.Opening or player.get_state() == vlc.State.Buffering:
+            time.sleep(0.1)
+        
+        if player.get_state() in [vlc.State.Error, vlc.State.Stopped]:
+            player.stop()
+            player.play()
+        
+        duration = media.get_duration() / 1000
+        while duration == 0:
+            duration = media.get_duration() / 1000
+            time.sleep(0.1)
+        
+        player.set_fullscreen(True)
+        
+        print(f"Start Playing: {video_path}")
+
+        start_time = datetime.now()
+        while player.get_state() != vlc.State.Ended:
+            time.sleep(1)
+
+        end_time = datetime.now()
+        print(f"End Playback: {video_path}")
+
+        player.stop()
+        player.release()
+        instance.release()
+
+        scores = self.get_scores()
+        self.save_scores(video_path, start_time, end_time, scores)
+
+    def get_scores(self):
+        scores_window = tk.Tk()
+        scores_window.title("Score Screen")
+
+        screen_width = scores_window.winfo_screenwidth()
+        screen_height = scores_window.winfo_screenheight()
+        window_width = 800
+        window_height = 400
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+        scores_window.geometry(f'{window_width}x{window_height}+{x}+{y}')
+
+        labels = ["Liking", "Valence", "Arousal"]
+        scores = {}
+        value_labels = {}
+
+        def update_label(var, label):
+            value_labels[label].config(text=f"{label.capitalize()}: {var.get():.2f}")
+
+        for label in labels:
+            frame = tk.Frame(scores_window)
+            frame.pack(pady=10, padx=20)
+
+            var = tk.DoubleVar()
+            scale = tk.Scale(frame, from_=0, to=10, variable=var, orient=tk.HORIZONTAL, resolution=1)
+            scale.pack(side=tk.LEFT)
+
+            value_label = tk.Label(frame, text=f"{label.capitalize()}: 0", font=('Helvetica', 14))
+            value_label.pack(side=tk.LEFT, padx=10)
+            value_labels[label] = value_label
+
+            var.trace("w", lambda name, index, mode, var=var, label=label: update_label(var, label))
+
+        def on_submit():
+
+            for label, value_label in value_labels.items():
+                scores[label] = int(var.get())
+            scores_window.destroy()
+
+        submit_button = ttk.Button(scores_window, text="Submit", command=on_submit)
+        submit_button.pack(pady=20)
+
+        scores_window.mainloop()
+        return scores
+
+    def format_scale(self, var, value, position, label):
+        var.set(round(value))
+
+    def save_scores(self, video_path, start_time, end_time, scores):
+        with open('scores.txt', 'a') as file:
+            file.write(f"Play Video Path: {video_path}\n")
+            file.write(f"Starting time: {start_time}\n")
+            file.write(f"Ending time: {end_time}\n")
+            file.write(f"Liking: {scores['Liking']}\n")
+            file.write(f"Valence: {scores['Valence']}\n")
+            file.write(f"Arousal: {scores['Arousal']}\n")
+            file.write("-" * 40 + "\n")
 
 
 # standard P300 paradigm
@@ -2305,7 +2448,7 @@ class GetPlabel_MyTherad:
     single trial stimulation, and then the next trial stimulation is started.
     However, the continuous control paradigm does not need to wait for the online
     result, so the sub-thread is opened to receive the online feedback result.
-
+    子线程用于获得在线实验的结果
     author: Wei Zhao
 
     Created on: 2022-07-30
