@@ -136,7 +136,7 @@ player = mp4play(win=win)
 
 视频播放结束后弹出打分框，我们选用了脑电情绪识别任务常用的3个指标：`liking`表示对短视频的喜好度，`valence`表示该短视频的开心程度，`arousal`表示该短视频的兴奋程度，每个指标满分10分，最低分0分。
 
-![image-20240802213553007](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240802213553007.png)
+![image-20240802213553007](https://github.com/hanyilinn/MetaBCI-USTCNeroSpark/blob/master/images/image-20240802213553007.png)
 
 点击提交后进入下一个视频的播放，若点击关闭则结束实验。
 
@@ -156,7 +156,7 @@ Arousen: 5.0
 
 在播放视频诱导刺激的同时，Muse采集设备也在实时采集数据：
 
-![image-20240802215557908](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240802215557908.png)
+![image-20240802215557908](https://github.com/hanyilinn/MetaBCI-USTCNeroSpark/blob/master/images/image-20240802215557908.png)
 
 ### 三、离线训练模块
 
@@ -324,7 +324,7 @@ def parse_txt_file(file_path):
 
 我们使用多尺度卷积网络RACNN-Lite作为模型。划分数据集的前80%为训练集，后20%为测试集。Batch size设置为64，epoch设置为50，学习率设置为0.0001，辍学率设置为0.5。
 
-![image-20240803153330091](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240803153330091.png)
+![image-20240803153330091](https://github.com/hanyilinn/MetaBCI-USTCNeroSpark/blob/master/images/image-20240803153330091.png)
 
 RACNN-Lite包含时间特征提取器、区域特征提取器、非对称特征提取器以及分类器。
 
@@ -383,4 +383,4 @@ def ReadCntFile_ly(cntFileName="EEG.cnt", numProcessSample=2048, isLatestSample=
 ```
 
 如下为一典型的示例结果：
-![image-20240803154427150](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240803154427150.png)
+![image-20240803154427150](https://github.com/hanyilinn/MetaBCI-USTCNeroSpark/blob/master/images/image-20240803154427150.png)
