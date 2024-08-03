@@ -1,0 +1,114 @@
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-399515.mp4
+Starting time: 2024-07-31 21:42:03.261538
+Ending time: 2024-07-31 21:42:43.280135
+Liking: 6
+Valence: 6
+Arousal: 6
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-879130.mp4
+Starting time: 2024-07-31 21:43:18.130977
+Ending time: 2024-07-31 21:43:53.145037
+Liking: 8
+Valence: 8
+Arousal: 8
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024720-409638.mp4
+Starting time: 2024-07-31 21:43:59.113816
+Ending time: 2024-07-31 21:44:24.123194
+Liking: 9
+Valence: 9
+Arousal: 9
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-858763.mp4
+Starting time: 2024-07-31 21:44:29.378449
+Ending time: 2024-07-31 21:46:23.433304
+Liking: 10
+Valence: 10
+Arousal: 10
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-604530.mp4
+Starting time: 2024-07-31 21:46:29.682343
+Ending time: 2024-07-31 21:47:30.707800
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024720-740170.mp4
+Starting time: 2024-08-03 15:55:19.959492
+Ending time: 2024-08-03 15:55:51.973648
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024720-050742.mp4
+Starting time: 2024-08-03 15:55:56.481646
+Ending time: 2024-08-03 15:56:29.496751
+Liking: 3
+Valence: 3
+Arousal: 3
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\2024717_975282.mp4
+Starting time: 2024-08-03 15:56:40.674625
+Ending time: 2024-08-03 15:57:29.698353
+Liking: 6
+Valence: 6
+Arousal: 6
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-399515.mp4
+Starting time: 2024-08-03 16:42:08.991299
+Ending time: 2024-08-03 16:42:49.006438
+Liking: 8
+Valence: 8
+Arousal: 8
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-036090.mp4
+Starting time: 2024-08-03 16:48:25.268207
+Ending time: 2024-08-03 16:49:31.302343
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-036431.mp4
+Starting time: 2024-08-03 16:49:37.443576
+Ending time: 2024-08-03 16:50:37.472573
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\2024717_975282.mp4
+Starting time: 2024-08-03 16:50:38.835372
+Ending time: 2024-08-03 16:51:27.858046
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-264716.mp4
+Starting time: 2024-08-03 17:05:33.796131
+Ending time: 2024-08-03 17:06:09.833088
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-036431.mp4
+Starting time: 2024-08-03 17:26:03.057198
+Ending time: 2024-08-03 17:27:03.086260
+Liking: 1
+Valence: 1
+Arousal: 1
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-202659.mp4
+Starting time: 2024-08-03 17:27:14.032639
+Ending time: 2024-08-03 17:27:35.043124
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-203816.mp4
+Starting time: 2024-08-03 17:29:28.782063
+Ending time: 2024-08-03 17:30:16.803158
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024720-050742.mp4
+Starting time: 2024-08-03 17:30:20.246403
+Ending time: 2024-08-03 17:30:53.262070
+Liking: 0
+Valence: 0
+Arousal: 0
+----------------------------------------
+Play Video Path: D:\MetaBCI-master\tiktok\∂∂“Ù2024721-947059.mp4
+Starting time: 2024-08-03 17:31:16.724845
+Ending time: 2024-08-03 17:32:20.758303
