@@ -132,7 +132,7 @@ player = mp4play(win=win)
 ```
 
 运行stim_demo.py后将进入视频播放界面：
-![image-20240802213231361](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240802213231361.png)
+![image-20240802213231361](https://github.com/hanyilinn/MetaBCI-USTCNeroSpark/blob/main/images/image-20240802213231361.png)
 
 视频播放结束后弹出打分框，我们选用了脑电情绪识别任务常用的3个指标：`liking`表示对短视频的喜好度，`valence`表示该短视频的开心程度，`arousal`表示该短视频的兴奋程度，每个指标满分10分，最低分0分。
 
