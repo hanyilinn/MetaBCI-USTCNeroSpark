@@ -11,11 +11,11 @@ import time
 from abc import abstractmethod
 from collections import deque
 from typing import List, Optional, Tuple, Dict, Any
-
+import torch
 import numpy as np
 import pylsl
 import queue
-
+from scipy.signal import butter, lfilter
 from .logger import get_logger
 from .workers import ProcessWorker
 
@@ -252,6 +252,77 @@ class BaseAmplifier:
             self.down_worker(name)
             self.unregister_worker(name)
 
+class MuseScan(BaseAmplifier):
+    def __init__(self,srate: float = 256,num_chans: int = 2,):
+        self.srate = srate
+        self.num_chans = num_chans
+    def ReadCntFile(self, cntFileName="EEG.cnt"):
+        data = []
+        with open(cntFileName, "rb") as f:
+            byte = f.read(4)
+            num_channel = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iNumEvtPerSample = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iNumSplPerBlock = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            sampling_rate = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iDataSize = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            resolution = struct.unpack('f', byte)[0]
+            byte = f.read(int(num_channel * 10))
+            channel_names = struct.unpack('{}s'.format(int(num_channel * 10)), byte)[0]
+            channel_names = channel_names.decode('utf-8')
+            while byte:
+                try:
+                    # Do stuff with byte.
+                    byte = f.read(num_channel * iDataSize)
+                    data.append(struct.unpack(num_channel * 'd', byte))
+                except:
+                    break
+
+            data = np.array(data)
+        return data
+
+    def _recv(self,num_bytes):
+        data = []
+        cntFileName="C:\CBCR\MuseData\Streaming\EEG.cnt"
+        with open(cntFileName, "rb") as f:
+            byte = f.read(4)
+            num_channel = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iNumEvtPerSample = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iNumSplPerBlock = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            sampling_rate = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            iDataSize = struct.unpack('i', byte)[0]
+            byte = f.read(4)
+            resolution = struct.unpack('f', byte)[0]
+            try:
+                f.seek(-num_channel * (num_bytes + 1) * iDataSize, 2)
+                
+            except:
+                data = self.ReadCntFile(cntFileName)
+                # data = np.reshape(data,(-1,7))
+                return data
+            while byte:
+                try:
+                    # Do stuff with byte.
+                    byte = f.read(7 * iDataSize)
+                    data.append(struct.unpack(7 * 'd', byte))
+                except:
+                    break
+            data = np.array(data)
+        return data
+
+    def recv(self,num):
+        data = self._recv(num_bytes=num)
+        if data.shape[0]>=num:
+            EEG = data[-num:,1:3].transpose()
+            return EEG
 
 class NeuroScan(BaseAmplifier):
     """An amplifier implementation for NeuroScan device.
